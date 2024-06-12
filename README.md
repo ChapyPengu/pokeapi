@@ -1,13 +1,13 @@
 # Pokeapi
 
-## Init Project
+### Init Project
 
 in project folder
 `npm i`
 `cd ./client`
 `npm i`
 
-## Run Project
+### Run Project
 
 in project folder
 `npm run dev`
