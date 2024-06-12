@@ -1,0 +1,233 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: sans-serif;
+    font-size: 24px;
+    --primary-color: #3498db;
+    --primary-color-hover: #2980b9;
+    --fire-color: #E72324;
+    --water-color: #2481F0;
+    --grass-color: #3DA224;
+    --normal-color: #A0A2A0;
+    --bug-color: #92A212;
+    --poison-color: #923FCC;
+    --ground-color: #92501B;
+    --fighting-color: #FF8100;
+    --ghost-color: #713F71;
+    --rock-color: #B0AB82;
+    --electric-color: #FAC100;
+    --ice-color: #3DD9FF;
+    --dark-color: #4F3F3D;
+    --dragon-color: #4F60E2;
+    --fairy-color: #EF71F0;
+    --psychic-color: #EF3F7A;
+    --steel-color: #60A2B9;
+}
+
+
+.btn {
+    padding: .25rem .5rem;
+    background-color: #3498db;
+    border-radius: .2rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    transition: background-color .2s ease-in;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+.btn:focus {
+    outline: 4px solid #686de0;
+}
+
+.btn:disabled {
+    background-color: #535c68;
+}
+
+.app {
+    max-width: 1024px;
+    margin: auto;
+}
+
+.app__pokemons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+@media (width < 768px) {
+    .app__pokemons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (width < 512px) {
+    .app__pokemons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.home__box-vs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .25rem;
+    border: 1px solid #3498db;
+    padding: .25rem .5rem;
+    border-radius: .2rem;
+}
+
+.pokemon__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    border: 2px solid transparent;
+    border-radius: .5rem;
+    padding: .5rem;
+    transition: box-shadow .3s ease-out;
+}
+
+.pokemon__card:hover {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px, rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.pokemon__card-selected {
+    border: 2px solid rgb(52, 152, 219, 1);
+}
+
+.pokemon__card-selected-to-change-animation {
+    animation: selected-to-change-animation .3s linear infinite;
+}
+
+@keyframes selected-to-change-animation {
+    0% {
+        border-color: rgb(52, 152, 219, 1);
+    }
+
+    50% {
+        border-color: rgb(52, 152, 219, 0);
+    }
+
+    100% {
+        border-color: rgb(52, 152, 219, 1);
+    }
+}
+
+.battle__animation-attack-front {
+    animation: animation-attack-front 1s linear;
+}
+
+.battle__animation-attack-back {
+    animation: animation-attack-back 1s linear;
+}
+
+@keyframes animation-attack-front {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(-100%, 100%);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes animation-attack-back {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(100%, -100%);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.start__btn {
+    width: 100%;
+    display: block;
+    padding: .6rem 1.2rem;
+    margin: 1rem 0;
+    border-radius: .2rem;
+    color: white;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px, rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: background-color .3s ease-in;
+}
+
+.start__btn:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.modal-shadow {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.battle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--primary-color);
+    border-radius: 1rem;
+}
+
+.battle__pokemon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .name-a {
+        width: 100%;
+        text-align: end;
+    }
+
+    .name-b {
+        width: 100%;
+        text-align: start;
+    }
+
+    .sprite {
+        width: 180px;
+        height: 180px;
+    }
+
+    .life {
+        width: 100%;
+        height: 8px;
+
+        .total-life {
+            width: 100%;
+            height: 100%;
+            background-color: #E72324;
+            border-radius: 1rem;
+
+            .current-life {
+                /* width: 50%; */
+                height: 100%;
+                background-color: #3DA224;
+                border-radius: 1rem;
+            }
+        }
+    }
+}
