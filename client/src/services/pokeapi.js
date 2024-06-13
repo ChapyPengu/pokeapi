@@ -2,6 +2,7 @@ import axios from 'axios'
 import Pokemon from '../models/pokemon.model'
 import Move from '../models/move.model'
 import { random } from '../utilities/number'
+import { TYPES } from '../config/config'
 
 const instance = axios.create({
   baseURL: 'https://pokeapi.co/api/v2/'
@@ -66,7 +67,7 @@ class PokeapiService {
         specialAttack.base_stat,
         specialDefense.base_stat,
         speed.base_stat,
-        dataPokemon.types.map(type => type.type.name),
+        dataPokemon.types.map(type => TYPES.find(type.type.name)),
         dataPokemon.sprites.back_default,
         dataPokemon.sprites.front_default,
         allMoves,

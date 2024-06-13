@@ -1,5 +1,6 @@
 import { MOVE_CATEGORY } from "../config/config"
 import { random } from "../utilities/number"
+import { TYPES } from "../config/config"
 
 class Pokemon {
   constructor(name, hp, attack, defense, specialAttack, specialDefense, speed, types, back_sprite, front_sprite, allMoves, currentHp, currentMoves) {
