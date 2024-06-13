@@ -1,27 +1,20 @@
 import express from 'express'
 import http from 'http'
-import { Server } from 'socket.io'
-import Battle from './battle'
+import {io} from './socketConfig.js'
+import router from './multiplayer.routes'
+import Battle from './battle.js'
+
 
 const app = express()
 const server = http.createServer(app)
-const io = new Server(server)
+io.attach(server)
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 const battles = []
 
-io.on('connection', (socket) => {
-  console.log('client connected')
-  
-  socket.on('message', (data) => {
-    console.log(data)
-  })
+app.use("/" , router)
 
-  socket.on('disconnec', () => {
-    console.log('client disconnected')
-  })
-})
-
-server.listen(PORT, () => {
-  console.log('Server on port', PORT)
+server.listen(PORT || 8000, (...things) => {
+  console.log(things)
+  console.log(process.cwd())
 })

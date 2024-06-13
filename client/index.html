@@ -7,7 +7,17 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <button type = "button" id="btn">multiplayer</button>
+    <p id="message"></p>
+    <script>
+
+      const btn = document.getElementById("btn")
+
+      btn.addEventListener("click", () => {
+        window.location.replace("http://localhost:8000/multiplayer")
+        return
+      });
+    </script>
     <script src="https://kit.fontawesome.com/60642245a2.js" crossorigin="anonymous"></script>
   </body>
 </html>
