@@ -24,10 +24,18 @@ io.of('/multiplayer').on('connection', (socket) => {
         console.log(`User ${socket.id} left room ${room}`)
     })
 
-    socket.on("create-room" , () => {
+    socket.on("createRoom" , () => {
         let room = `room${Math.floor(Math.random() * 1000)}`
         socket.join(room)
         console.log(`User ${socket.id} created room ${room}`)
+    })
+
+    socket.on("chat", (msg) => {
+        let room = socket.rooms.values()
+        room.next()
+        room = room.next().value
+        console.log(room)
+        io.of('/multiplayer').to(room).emit("message" , msg)
     })
 
     socket.emit("ID" , socket.id)

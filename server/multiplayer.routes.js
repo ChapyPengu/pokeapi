@@ -10,7 +10,11 @@ router.get("/" , (req, res) => {
 
 router.get("/multiplayer" , async (req, res) => {
     res.sendFile("/client/multiplayer.html" , { root: process.cwd()})
-    })
+})
+
+router.get("/multiplayer:room", async(req , res) => {
+  res.sendFile("/client/battle.html" , {root : process.cwd()})
+})
 
 router.get("/rooms" , async (req, res) => {
     let rooms = await getRooms()

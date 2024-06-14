@@ -9,6 +9,7 @@
     <div id="root"></div>
     <h1>Multiplayer</h1>
     <h2>Select a room or create one</h2>
+    <button type="button" id="refresh-rooms">Refresh</button>
     <div id="rooms">
         <table>
             <thead>
@@ -22,10 +23,40 @@
                 
             </tbody>
     </div>
-    
+    <button type="button" id="create-room">Create Room</button>
+
+    <p id="message"></p>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
         let roomsTable = document.querySelector("#rooms tbody")
-        setInterval(async () => {
+        const createBtn = document.getElementById("create-room")
+        let joinBtn = document.querySelector("#join-room")
+        const refreshBtn = document.getElementById("refresh-rooms")
+        
+        const SOCKET = io("/multiplayer")
+
+        async function createChat(){
+            let chat = document.createElement("div")
+            chat.id = "chat"
+            let chatInput = document.createElement("input")
+            chatInput.type = "text"
+            chatInput.id = "chat-input"
+            let chatBtn = document.createElement("button")
+            chatBtn.textContent = "Send"
+            chatBtn.addEventListener("click", () => {
+                SOCKET.emit("chat", JSON.stringify({user: SOCKET.id,  msg: chatInput.value}))
+                chatInput.value = ""
+            })
+            let chatMessages = document.createElement("div")
+            chatMessages.id = "chat-messages"
+            chat.appendChild(chatInput)
+            chat.appendChild(chatBtn)
+            chat.appendChild(chatMessages)
+            document.body.appendChild(chat)
+        }
+
+        async function createCellRooms () {
+            console.log("Fetching rooms")
             const response = await fetch("/rooms")
             const rooms = await response.json()
             roomsTable.innerHTML = ""
@@ -34,12 +65,18 @@
                 const td1 = document.createElement("td")
                 const td2 = document.createElement("td")
                 const td3 = document.createElement("td")
+                td3.id = "join-room-cell"
                 td1.textContent = obj.room
-                td2.textContent = obj.users
+                td1.id = "room-name"
+                td2.textContent = obj.users.length
                 const joinBtn = document.createElement("button")
                 joinBtn.textContent = "Join"
-                joinBtn.addEventListener("click", () => {
-                    window.location.replace(`http://localhost:8000/multiplayer/${obj.room}`)
+                joinBtn.id = "join-room"
+                joinBtn.addEventListener("click", async () => {
+                    const room = document.querySelector("#room-name").textContent
+                    console.log(room)
+                    SOCKET.emit("joinRoom", room)
+                    await createChat()
                 })
                 td3.appendChild(joinBtn)
                 tr.appendChild(td1)
@@ -47,24 +84,27 @@
                 tr.appendChild(td3)
                 roomsTable.appendChild(tr)
             })
-        }, 5000)
-    </script>
+        }
 
-    <button type="button" id="create-room">Create Room</button>
+        createBtn.addEventListener("click", async () => {
+            SOCKET.emit("createRoom")
+            await createChat()
+        })
+        
+        refreshBtn.addEventListener("click", async () => {
+            await createCellRooms()
+            joinBtn = document.querySelector("#join-room")
+        })
+    
 
-    <p id="message"></p>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const createBtn = document.getElementById("create-room")
-
-        const SOCKET = io("/multiplayer")
+        SOCKET.on("message", message => {
+            const p = document.createElement("p")
+            p.textContent = message
+            document.getElementById("chat-messages").appendChild(p)
+        })
 
         SOCKET.on("connect", () => {
             console.log("Connected to server")
-        })
-
-        createBtn.addEventListener("click", () => {
-            SOCKET.emit("create-room")
         })
     </script>
     <script src="https://kit.fontawesome.com/60642245a2.js" crossorigin="anonymous"></script>
