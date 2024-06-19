@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multiplayer
+  labels:
+    name: multiplayer
+spec:
+  containers:
+  - name: multiplayer
+    image: multiplayer/pokedex
+    ports:
+      - containerPort: 8000
+    command: ["bun" , "run" , "./server/index.js"]
