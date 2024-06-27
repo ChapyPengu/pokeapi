@@ -7,17 +7,16 @@
   </head>
   <body>
     <div id="root"></div>
-    <button type = "button" id="btn">multiplayer</button>
-    <p id="message"></p>
+    make a bottom so when i press it, it takes me to thisaddress/multiplayer
+    <button id="multiplayer">Multiplayer</button>
     <script>
-
-      const btn = document.getElementById("btn")
-
-      btn.addEventListener("click", () => {
-        window.location.replace("http://localhost:8000/multiplayer")
-        return
+      document.getElementById("multiplayer").addEventListener("click", () => {
+        window.location.replace("/multiplayer");
       });
     </script>
+
+    <p id="message"></p>
+
     <script src="https://kit.fontawesome.com/60642245a2.js" crossorigin="anonymous"></script>
   </body>
 </html>

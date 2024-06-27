@@ -5,15 +5,15 @@ const router = Router()
 export default router
 
 router.get("/" , (req, res) => {
-  res.sendFile("/client/index.html" , { root: process.cwd()})
+  res.sendFile("./client/index.html" , { root: process.cwd()})
 })
 
 router.get("/multiplayer" , async (req, res) => {
-    res.sendFile("/client/multiplayer.html" , { root: process.cwd()})
+    res.sendFile("./client/multiplayer.html" , { root: process.cwd()})
 })
 
 router.get("/multiplayer:room", async(req , res) => {
-  res.sendFile("/client/battle.html" , {root : process.cwd()})
+  res.sendFile("./client/battle.html" , {root : process.cwd()})
 })
 
 router.get("/rooms" , async (req, res) => {
